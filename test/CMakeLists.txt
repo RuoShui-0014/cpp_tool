@@ -3,8 +3,11 @@ project(test)
 
 set(CMAKE_CXX_STANDARD 20)
 
-add_subdirectory(../base)
+add_definitions(-DOS_WIN)
+#add_definitions(-DUSING_SHARED)
 
 add_executable(test_base
     main.cpp
 )
+
+target_link_libraries(test_base PRIVATE base)

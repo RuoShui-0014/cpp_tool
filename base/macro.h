@@ -4,8 +4,14 @@
 
 #ifdef BUILDING_SHARED
 #define BASE_EXPORT __declspec(dllexport)
-#elif USING_SHARED
+#elifdef  USING_SHARED
 #define BASE_EXPORT __declspec(dllimport)
+#else
+#define BASE_EXPORT
 #endif
+
+#else
+
+#define BASE_EXPORT
 
 #endif
