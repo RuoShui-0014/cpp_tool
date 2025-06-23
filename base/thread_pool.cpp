@@ -75,13 +75,4 @@ void ThreadPool::ThreadIns::Wait() {
   worker_.join();
 }
 
-int ThreadPool::ThreadIns::TaskCount() {
-  int count = 0;
-  {
-    std::lock_guard lock(queue_mutex_);
-    count = queue_.size();
-  }
-  return count;
-}
-
 }  // namespace base

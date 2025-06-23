@@ -27,7 +27,7 @@ class BASE_EXPORT ThreadPool {
 
   void Start(Params params = {std::thread::hardware_concurrency(), 1});
 
-  template<typename Func, typename... Args>
+  template <typename Func, typename... Args>
   void AddTask(Func&& task, Args&&... args) {
     std::vector<int> data(threads_ins_.size());
     for (int i = 0; i < data.size(); i++) {
@@ -36,7 +36,8 @@ class BASE_EXPORT ThreadPool {
     auto min_it = std::ranges::min_element(data);
     for (int i = 0; i < data.size(); i++) {
       if (data.at(i) == *min_it) {
-        threads_ins_[i]->AddTask(std::forward<Func>(task), std::forward<Args>(args)...);
+        threads_ins_[i]->AddTask(std::forward<Func>(task),
+                                 std::forward<Args>(args)...);
         return;
       }
     }
@@ -50,13 +51,21 @@ class BASE_EXPORT ThreadPool {
 
     void Stop();
     void Wait();
-    int TaskCount();
+    int TaskCount() {
+      int count = 0;
+      {
+        std::lock_guard lock(queue_mutex_);
+        count = static_cast<int>(queue_.size());
+      }
+      return count;
+    }
 
-    template<typename Func, typename... Args>
+    template <typename Func, typename... Args>
     void AddTask(Func&& task, Args&&... args) {
       {
         std::lock_guard lock(queue_mutex_);
-        queue_.emplace(std::bind(std::forward<Func>(task), std::forward<Args>(args)...));
+        queue_.emplace(
+            std::bind(std::forward<Func>(task), std::forward<Args>(args)...));
       }
       cv_.notify_all();
     }

@@ -3,8 +3,11 @@ project(test)
 
 set(CMAKE_CXX_STANDARD 20)
 
-#add_definitions(-DOS_WIN)
-#add_definitions(-DUSING_SHARED)
+add_definitions(-DOS_WIN)
+
+if (BUILDING_SHARED)
+add_definitions(-DUSING_SHARED)
+endif ()
 
 add_executable(test
     main.cpp
