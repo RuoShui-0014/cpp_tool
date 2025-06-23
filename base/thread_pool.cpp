@@ -23,7 +23,10 @@ void ThreadPool::Start(Params params) {
   running_.store(true);
   server_ = std::thread([this]() {
     while (running_.load()) {
-      std::this_thread::sleep_for(std::chrono::seconds(1));
+      {
+        std::unique_lock lock(exec_mutex_);
+        cv_.wait(lock, [this]() { return !running_.load(); });
+      }
     }
 
     for (auto& ins : threads_ins_) {
@@ -43,10 +46,11 @@ ThreadPool::ThreadIns::ThreadIns(int id, std::mutex& mutex)
     : queue_mutex_(mutex) {
   running_.store(true);
   worker_ = std::thread([this, id]() {
-    while (running_.load()) {
+    while (running_.load() || TaskCount()) {
       {
         std::unique_lock exec_lock(exec_mutex_);
-        cv_.wait_for(exec_lock, std::chrono::milliseconds(10));
+        cv_.wait(exec_lock,
+                 [this]() { return TaskCount() || !running_.load(); });
       }
 
       std::function<void()> task;

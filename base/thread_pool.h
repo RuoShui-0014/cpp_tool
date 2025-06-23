@@ -71,18 +71,22 @@ class BASE_EXPORT ThreadPool {
     }
 
    private:
+    std::mutex exec_mutex_;
+    std::condition_variable cv_;
+    std::mutex& queue_mutex_;
+
     std::thread worker_;
     std::atomic_bool running_;
     std::queue<std::function<void()>> queue_;
-    std::condition_variable cv_;
-    std::mutex exec_mutex_;
-    std::mutex& queue_mutex_;
   };
+
+  std::mutex queue_mutex_;
+  std::mutex exec_mutex_;
+  std::condition_variable cv_;
 
   Params params_;
   std::thread server_;
   std::atomic_bool running_;
-  std::mutex queue_mutex_;
   std::vector<std::unique_ptr<ThreadIns>> threads_ins_;
 };
 
