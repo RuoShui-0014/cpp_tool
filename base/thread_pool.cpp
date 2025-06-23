@@ -1,15 +1,87 @@
 #include "thread_pool.h"
 
-#include <iostream>
-#include <format>
+#include <thread>
 
 namespace base {
 
-Thread_pool::Thread_pool() = default;
-Thread_pool::~Thread_pool() = default;
-
-void Thread_pool::start() {
-  std::cout << std::format("test") << std::endl;
+ThreadPool::ThreadPool() = default;
+ThreadPool::~ThreadPool() {
+  running_.store(false);
+  if (server_.joinable()) {
+    server_.join();
+  }
 }
 
+ThreadPool* ThreadPool::Get() {
+  static ThreadPool thread_pool;
+  return &thread_pool;
 }
+
+void ThreadPool::Start(Params params) {
+  params_ = params;
+
+  running_.store(true);
+  server_ = std::thread([this]() {
+    while (running_.load()) {
+      std::this_thread::sleep_for(std::chrono::seconds(1));
+    }
+
+    for (auto& ins : threads_ins_) {
+      ins->Stop();
+    }
+    for (auto& ins : threads_ins_) {
+      ins->Wait();
+    }
+  });
+
+  for (int i = 0; i < params_.min_threads; i++) {
+    threads_ins_.emplace_back(std::make_unique<ThreadIns>(i, queue_mutex_));
+  }
+}
+
+ThreadPool::ThreadIns::ThreadIns(int id, std::mutex& mutex)
+    : queue_mutex_(mutex) {
+  running_.store(true);
+  worker_ = std::thread([this, id]() {
+    while (running_.load()) {
+      {
+        std::unique_lock exec_lock(exec_mutex_);
+        cv_.wait_for(exec_lock, std::chrono::milliseconds(10));
+      }
+
+      std::function<void()> task;
+      {
+        std::lock_guard queue_lock(queue_mutex_);
+        if (!queue_.empty()) {
+          task = queue_.front();
+          queue_.pop();
+        }
+      }
+      if (task) {
+        task();
+      }
+    }
+  });
+}
+
+ThreadPool::ThreadIns::~ThreadIns() = default;
+
+void ThreadPool::ThreadIns::Stop() {
+  running_.store(false);
+  cv_.notify_all();
+}
+
+void ThreadPool::ThreadIns::Wait() {
+  worker_.join();
+}
+
+int ThreadPool::ThreadIns::TaskCount() {
+  int count = 0;
+  {
+    std::lock_guard lock(queue_mutex_);
+    count = queue_.size();
+  }
+  return count;
+}
+
+}  // namespace base

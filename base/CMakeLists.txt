@@ -4,7 +4,7 @@ project(base CXX)
 
 set(CMAKE_CXX_STANDARD 20)
 
-add_definitions(-DOS_WIN)
+#add_definitions(-DOS_WIN)
 #add_definitions(-DBUILDING_SHARED)
 
 add_library(base STATIC

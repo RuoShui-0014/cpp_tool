@@ -1,17 +1,17 @@
 #pragma once
 
-#ifdef OS_WIN
+#if defined(OS_WIN)
 
-#ifdef BUILDING_SHARED
-#define BASE_EXPORT __declspec(dllexport)
-#elifdef  USING_SHARED
-#define BASE_EXPORT __declspec(dllimport)
+  #if defined(BUILDING_SHARED)
+    #define BASE_EXPORT __declspec(dllexport)
+  #elif defined(USING_SHARED)
+    #define BASE_EXPORT __declspec(dllimport)
+  #else
+    #define BASE_EXPORT
+  #endif
+
 #else
-#define BASE_EXPORT
-#endif
 
-#else
-
-#define BASE_EXPORT
+  #define BASE_EXPORT
 
 #endif
