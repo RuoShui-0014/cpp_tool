@@ -3,6 +3,7 @@ project(test)
 
 set(CMAKE_CXX_STANDARD 20)
 
+include_directories(../)
 add_definitions(-DOS_WIN)
 
 if (BUILDING_SHARED)
