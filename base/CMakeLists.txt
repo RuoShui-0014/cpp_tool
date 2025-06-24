@@ -10,6 +10,8 @@ if (BUILDING_SHARED)
     add_definitions(-DBUILDING_SHARED)
     add_library(base SHARED
             macro.h
+            logger.cpp
+            logger.h
             thread_pool.cpp
             thread_pool.h
     )
@@ -23,6 +25,8 @@ if (BUILDING_SHARED)
 else ()
     add_library(base STATIC
         macro.h
+        logger.cpp
+        logger.h
         thread_pool.cpp
         thread_pool.h
     )

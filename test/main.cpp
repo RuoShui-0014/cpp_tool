@@ -1,7 +1,8 @@
 #include <format>
 #include <iostream>
 
-#include "../base/thread_pool.h"
+#include "base/logger.h"
+#include "base/thread_pool.h"
 
 long fibonacci(unsigned n) {
   if (n < 2) {
@@ -11,15 +12,22 @@ long fibonacci(unsigned n) {
 }
 
 int main(int argc, char* argv[]) {
+  base::Logger::Initialize("out/log.txt", base::Logger::Level::kDebug);
+  base::Logger::Log(base::Logger::Level::kDebug,
+                    std::format("{}", "Proccess entry ..."));
+
   base::ThreadPool pool;
-  pool.Start({20, 10});
+  pool.Start({20, 8});
 
   std::mutex mutex;
-  for (int i = 0; i < 20; i++) {
+  for (int i = 0; i < 1000; i++) {
     pool.AddTask(
         [&](int id) {
+          base::Logger::Log(base::Logger::Level::kDebug,
+                            std::format("{:0>3}->{}", id, "Thread task ..."));
+
           auto start = std::chrono::high_resolution_clock::now();
-          auto value = fibonacci(45);
+          auto value = fibonacci(30);
           auto end = std::chrono::high_resolution_clock::now();
           auto duration =
               std::chrono::duration_cast<std::chrono::seconds>(end - start);
@@ -32,6 +40,8 @@ int main(int argc, char* argv[]) {
         },
         i);
   }
+
+  // std::this_thread::sleep_for(std::chrono::seconds(5));
 
   return 0;
 }

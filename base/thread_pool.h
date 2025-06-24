@@ -35,18 +35,19 @@ class BASE_EXPORT ThreadPool {
     }
     auto min_it = std::ranges::min_element(data);
     for (int i = 0; i < data.size(); i++) {
-      if (data.at(i) == *min_it) {
-        threads_ins_[i]->AddTask(std::forward<Func>(task),
-                                 std::forward<Args>(args)...);
-        return;
+      if (data.at(i) != *min_it) {
+        continue;
       }
+      threads_ins_[i]->AddTask(std::forward<Func>(task),
+                               std::forward<Args>(args)...);
+      return;
     }
   }
 
  private:
   class ThreadIns {
    public:
-    explicit ThreadIns(int id, std::mutex& mutex);
+    explicit ThreadIns(int id);
     ~ThreadIns();
 
     void Stop();
@@ -62,25 +63,26 @@ class BASE_EXPORT ThreadPool {
 
     template <typename Func, typename... Args>
     void AddTask(Func&& task, Args&&... args) {
+      auto func =
+          std::bind(std::forward<Func>(task), std::forward<Args>(args)...);
       {
         std::lock_guard lock(queue_mutex_);
-        queue_.emplace(
-            std::bind(std::forward<Func>(task), std::forward<Args>(args)...));
+        queue_.emplace(std::move(func));
       }
       cv_.notify_all();
     }
 
    private:
     std::mutex exec_mutex_;
+    std::mutex queue_mutex_;
     std::condition_variable cv_;
-    std::mutex& queue_mutex_;
 
     std::thread worker_;
     std::atomic_bool running_;
     std::queue<std::function<void()>> queue_;
+    int id_;
   };
 
-  std::mutex queue_mutex_;
   std::mutex exec_mutex_;
   std::condition_variable cv_;
 
