@@ -14,6 +14,7 @@ if (BUILDING_SHARED)
             logger.h
             thread_pool.cpp
             thread_pool.h
+            safe_ptr.h
     )
 
     add_custom_command(TARGET base POST_BUILD
@@ -24,11 +25,12 @@ if (BUILDING_SHARED)
     )
 else ()
     add_library(base STATIC
-        macro.h
-        logger.cpp
-        logger.h
-        thread_pool.cpp
-        thread_pool.h
+            macro.h
+            logger.cpp
+            logger.h
+            thread_pool.cpp
+            thread_pool.h
+            safe_ptr.h
     )
 endif ()
 

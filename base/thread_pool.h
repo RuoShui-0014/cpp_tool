@@ -90,6 +90,9 @@ class BASE_EXPORT ThreadPool {
   std::thread server_;
   std::atomic_bool running_;
   std::vector<std::unique_ptr<ThreadIns>> threads_ins_;
+
+  std::chrono::time_point<std::chrono::steady_clock> start_{
+      std::chrono::high_resolution_clock::now()};
 };
 
 }  // namespace base
