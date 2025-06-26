@@ -1,0 +1,104 @@
+2025-06-26 13:45:40.2763582 |INFO  | Proccess entry ... |E:\Files\C++Files\cpp_tool\test\main.cpp:19:int __cdecl main(int, char **)
+2025-06-26 13:45:40.2763721 |INFO  | Thread pool start. |E:\Files\C++Files\cpp_tool\base\thread_pool.cpp:31:void __cdecl base::ThreadPool::Start(Params)
+2025-06-26 13:45:40.2763912 |INFO  | Thread pool`s child 0 start. |E:\Files\C++Files\cpp_tool\base\thread_pool.cpp:61:__cdecl base::ThreadPool::ThreadIns::ThreadIns(int)
+2025-06-26 13:45:40.2764214 |INFO  | Thread pool`s child 1 start. |E:\Files\C++Files\cpp_tool\base\thread_pool.cpp:61:__cdecl base::ThreadPool::ThreadIns::ThreadIns(int)
+2025-06-26 13:45:40.2764361 |INFO  | Thread pool`s child 2 start. |E:\Files\C++Files\cpp_tool\base\thread_pool.cpp:61:__cdecl base::ThreadPool::ThreadIns::ThreadIns(int)
+2025-06-26 13:45:40.2764525 |INFO  | Thread pool`s child 3 start. |E:\Files\C++Files\cpp_tool\base\thread_pool.cpp:61:__cdecl base::ThreadPool::ThreadIns::ThreadIns(int)
+2025-06-26 13:45:40.2764675 |INFO  | Thread pool`s child 4 start. |E:\Files\C++Files\cpp_tool\base\thread_pool.cpp:61:__cdecl base::ThreadPool::ThreadIns::ThreadIns(int)
+2025-06-26 13:45:40.2764845 |INFO  | Thread pool`s child 5 start. |E:\Files\C++Files\cpp_tool\base\thread_pool.cpp:61:__cdecl base::ThreadPool::ThreadIns::ThreadIns(int)
+2025-06-26 13:45:40.2765009 |INFO  | Thread pool`s child 6 start. |E:\Files\C++Files\cpp_tool\base\thread_pool.cpp:61:__cdecl base::ThreadPool::ThreadIns::ThreadIns(int)
+2025-06-26 13:45:40.2765144 |INFO  | Thread pool`s child 7 start. |E:\Files\C++Files\cpp_tool\base\thread_pool.cpp:61:__cdecl base::ThreadPool::ThreadIns::ThreadIns(int)
+2025-06-26 13:45:40.2766009 |INFO  | Wait close thread pool. |E:\Files\C++Files\cpp_tool\base\thread_pool.cpp:11:__cdecl base::ThreadPool::~ThreadPool(void)
+2025-06-26 13:45:40.2769630 |DEBUG | 001->Thread task... |E:\Files\C++Files\cpp_tool\test\main.cpp:28:auto __cdecl main(int, char **)::(anonymous class)::operator()(int) const
+2025-06-26 13:45:40.2770378 |DEBUG | 002->Thread task... |E:\Files\C++Files\cpp_tool\test\main.cpp:28:auto __cdecl main(int, char **)::(anonymous class)::operator()(int) const
+2025-06-26 13:45:40.2770553 |DEBUG | 000->Thread task... |E:\Files\C++Files\cpp_tool\test\main.cpp:28:auto __cdecl main(int, char **)::(anonymous class)::operator()(int) const
+2025-06-26 13:45:40.2770724 |DEBUG | 003->Thread task... |E:\Files\C++Files\cpp_tool\test\main.cpp:28:auto __cdecl main(int, char **)::(anonymous class)::operator()(int) const
+2025-06-26 13:45:40.2771064 |DEBUG | 004->Thread task... |E:\Files\C++Files\cpp_tool\test\main.cpp:28:auto __cdecl main(int, char **)::(anonymous class)::operator()(int) const
+2025-06-26 13:45:40.2776405 |DEBUG | 005->Thread task... |E:\Files\C++Files\cpp_tool\test\main.cpp:28:auto __cdecl main(int, char **)::(anonymous class)::operator()(int) const
+2025-06-26 13:45:40.2782251 |DEBUG | 006->Thread task... |E:\Files\C++Files\cpp_tool\test\main.cpp:28:auto __cdecl main(int, char **)::(anonymous class)::operator()(int) const
+2025-06-26 13:45:40.2786958 |DEBUG | 007->Thread task... |E:\Files\C++Files\cpp_tool\test\main.cpp:28:auto __cdecl main(int, char **)::(anonymous class)::operator()(int) const
+2025-06-26 13:45:40.5603320 |DEBUG | 013->Thread task... |E:\Files\C++Files\cpp_tool\test\main.cpp:28:auto __cdecl main(int, char **)::(anonymous class)::operator()(int) const
+2025-06-26 13:45:40.5627183 |DEBUG | 009->Thread task... |E:\Files\C++Files\cpp_tool\test\main.cpp:28:auto __cdecl main(int, char **)::(anonymous class)::operator()(int) const
+2025-06-26 13:45:40.5656264 |DEBUG | 011->Thread task... |E:\Files\C++Files\cpp_tool\test\main.cpp:28:auto __cdecl main(int, char **)::(anonymous class)::operator()(int) const
+2025-06-26 13:45:40.5667419 |DEBUG | 008->Thread task... |E:\Files\C++Files\cpp_tool\test\main.cpp:28:auto __cdecl main(int, char **)::(anonymous class)::operator()(int) const
+2025-06-26 13:45:40.5685358 |DEBUG | 012->Thread task... |E:\Files\C++Files\cpp_tool\test\main.cpp:28:auto __cdecl main(int, char **)::(anonymous class)::operator()(int) const
+2025-06-26 13:45:40.5702833 |DEBUG | 010->Thread task... |E:\Files\C++Files\cpp_tool\test\main.cpp:28:auto __cdecl main(int, char **)::(anonymous class)::operator()(int) const
+2025-06-26 13:45:40.5762718 |DEBUG | 014->Thread task... |E:\Files\C++Files\cpp_tool\test\main.cpp:28:auto __cdecl main(int, char **)::(anonymous class)::operator()(int) const
+2025-06-26 13:45:40.5775592 |DEBUG | 015->Thread task... |E:\Files\C++Files\cpp_tool\test\main.cpp:28:auto __cdecl main(int, char **)::(anonymous class)::operator()(int) const
+2025-06-26 13:45:40.8488995 |DEBUG | 017->Thread task... |E:\Files\C++Files\cpp_tool\test\main.cpp:28:auto __cdecl main(int, char **)::(anonymous class)::operator()(int) const
+2025-06-26 13:45:40.8517805 |DEBUG | 021->Thread task... |E:\Files\C++Files\cpp_tool\test\main.cpp:28:auto __cdecl main(int, char **)::(anonymous class)::operator()(int) const
+2025-06-26 13:45:40.8555755 |DEBUG | 019->Thread task... |E:\Files\C++Files\cpp_tool\test\main.cpp:28:auto __cdecl main(int, char **)::(anonymous class)::operator()(int) const
+2025-06-26 13:45:40.8562473 |DEBUG | 020->Thread task... |E:\Files\C++Files\cpp_tool\test\main.cpp:28:auto __cdecl main(int, char **)::(anonymous class)::operator()(int) const
+2025-06-26 13:45:40.8563582 |DEBUG | 016->Thread task... |E:\Files\C++Files\cpp_tool\test\main.cpp:28:auto __cdecl main(int, char **)::(anonymous class)::operator()(int) const
+2025-06-26 13:45:40.8582257 |DEBUG | 018->Thread task... |E:\Files\C++Files\cpp_tool\test\main.cpp:28:auto __cdecl main(int, char **)::(anonymous class)::operator()(int) const
+2025-06-26 13:45:40.8735856 |DEBUG | 023->Thread task... |E:\Files\C++Files\cpp_tool\test\main.cpp:28:auto __cdecl main(int, char **)::(anonymous class)::operator()(int) const
+2025-06-26 13:45:40.8758476 |DEBUG | 022->Thread task... |E:\Files\C++Files\cpp_tool\test\main.cpp:28:auto __cdecl main(int, char **)::(anonymous class)::operator()(int) const
+2025-06-26 13:45:41.1371844 |DEBUG | 025->Thread task... |E:\Files\C++Files\cpp_tool\test\main.cpp:28:auto __cdecl main(int, char **)::(anonymous class)::operator()(int) const
+2025-06-26 13:45:41.1398259 |DEBUG | 024->Thread task... |E:\Files\C++Files\cpp_tool\test\main.cpp:28:auto __cdecl main(int, char **)::(anonymous class)::operator()(int) const
+2025-06-26 13:45:41.1428410 |DEBUG | 029->Thread task... |E:\Files\C++Files\cpp_tool\test\main.cpp:28:auto __cdecl main(int, char **)::(anonymous class)::operator()(int) const
+2025-06-26 13:45:41.1430640 |DEBUG | 028->Thread task... |E:\Files\C++Files\cpp_tool\test\main.cpp:28:auto __cdecl main(int, char **)::(anonymous class)::operator()(int) const
+2025-06-26 13:45:41.1479590 |DEBUG | 027->Thread task... |E:\Files\C++Files\cpp_tool\test\main.cpp:28:auto __cdecl main(int, char **)::(anonymous class)::operator()(int) const
+2025-06-26 13:45:41.1528038 |DEBUG | 026->Thread task... |E:\Files\C++Files\cpp_tool\test\main.cpp:28:auto __cdecl main(int, char **)::(anonymous class)::operator()(int) const
+2025-06-26 13:45:41.1580614 |DEBUG | 031->Thread task... |E:\Files\C++Files\cpp_tool\test\main.cpp:28:auto __cdecl main(int, char **)::(anonymous class)::operator()(int) const
+2025-06-26 13:45:41.1669159 |DEBUG | 030->Thread task... |E:\Files\C++Files\cpp_tool\test\main.cpp:28:auto __cdecl main(int, char **)::(anonymous class)::operator()(int) const
+2025-06-26 13:45:41.4249465 |DEBUG | 033->Thread task... |E:\Files\C++Files\cpp_tool\test\main.cpp:28:auto __cdecl main(int, char **)::(anonymous class)::operator()(int) const
+2025-06-26 13:45:41.4289303 |DEBUG | 037->Thread task... |E:\Files\C++Files\cpp_tool\test\main.cpp:28:auto __cdecl main(int, char **)::(anonymous class)::operator()(int) const
+2025-06-26 13:45:41.4300431 |DEBUG | 036->Thread task... |E:\Files\C++Files\cpp_tool\test\main.cpp:28:auto __cdecl main(int, char **)::(anonymous class)::operator()(int) const
+2025-06-26 13:45:41.4339411 |DEBUG | 032->Thread task... |E:\Files\C++Files\cpp_tool\test\main.cpp:28:auto __cdecl main(int, char **)::(anonymous class)::operator()(int) const
+2025-06-26 13:45:41.4383753 |DEBUG | 035->Thread task... |E:\Files\C++Files\cpp_tool\test\main.cpp:28:auto __cdecl main(int, char **)::(anonymous class)::operator()(int) const
+2025-06-26 13:45:41.4425575 |DEBUG | 034->Thread task... |E:\Files\C++Files\cpp_tool\test\main.cpp:28:auto __cdecl main(int, char **)::(anonymous class)::operator()(int) const
+2025-06-26 13:45:41.4454463 |DEBUG | 039->Thread task... |E:\Files\C++Files\cpp_tool\test\main.cpp:28:auto __cdecl main(int, char **)::(anonymous class)::operator()(int) const
+2025-06-26 13:45:41.4547503 |DEBUG | 038->Thread task... |E:\Files\C++Files\cpp_tool\test\main.cpp:28:auto __cdecl main(int, char **)::(anonymous class)::operator()(int) const
+2025-06-26 13:45:41.7523773 |INFO  | Thread pool close success, runtime is 1476ms. |E:\Files\C++Files\cpp_tool\base\thread_pool.cpp:22:__cdecl base::ThreadPool::~ThreadPool(void)
+2025-06-26 13:46:10.7859683 |INFO  | Proccess entry ... | E:\Files\C++Files\cpp_tool\test\main.cpp:19:int __cdecl main(int, char **)
+2025-06-26 13:46:10.7859823 |INFO  | Thread pool start. | E:\Files\C++Files\cpp_tool\base\thread_pool.cpp:31:void __cdecl base::ThreadPool::Start(Params)
+2025-06-26 13:46:10.7860007 |INFO  | Thread pool`s child 0 start. | E:\Files\C++Files\cpp_tool\base\thread_pool.cpp:61:__cdecl base::ThreadPool::ThreadIns::ThreadIns(int)
+2025-06-26 13:46:10.7860309 |INFO  | Thread pool`s child 1 start. | E:\Files\C++Files\cpp_tool\base\thread_pool.cpp:61:__cdecl base::ThreadPool::ThreadIns::ThreadIns(int)
+2025-06-26 13:46:10.7860491 |INFO  | Thread pool`s child 2 start. | E:\Files\C++Files\cpp_tool\base\thread_pool.cpp:61:__cdecl base::ThreadPool::ThreadIns::ThreadIns(int)
+2025-06-26 13:46:10.7860625 |INFO  | Thread pool`s child 3 start. | E:\Files\C++Files\cpp_tool\base\thread_pool.cpp:61:__cdecl base::ThreadPool::ThreadIns::ThreadIns(int)
+2025-06-26 13:46:10.7860755 |INFO  | Thread pool`s child 4 start. | E:\Files\C++Files\cpp_tool\base\thread_pool.cpp:61:__cdecl base::ThreadPool::ThreadIns::ThreadIns(int)
+2025-06-26 13:46:10.7860921 |INFO  | Thread pool`s child 5 start. | E:\Files\C++Files\cpp_tool\base\thread_pool.cpp:61:__cdecl base::ThreadPool::ThreadIns::ThreadIns(int)
+2025-06-26 13:46:10.7861050 |INFO  | Thread pool`s child 6 start. | E:\Files\C++Files\cpp_tool\base\thread_pool.cpp:61:__cdecl base::ThreadPool::ThreadIns::ThreadIns(int)
+2025-06-26 13:46:10.7861189 |INFO  | Thread pool`s child 7 start. | E:\Files\C++Files\cpp_tool\base\thread_pool.cpp:61:__cdecl base::ThreadPool::ThreadIns::ThreadIns(int)
+2025-06-26 13:46:10.7861997 |INFO  | Wait close thread pool. | E:\Files\C++Files\cpp_tool\base\thread_pool.cpp:11:__cdecl base::ThreadPool::~ThreadPool(void)
+2025-06-26 13:46:10.7864510 |DEBUG | 001->Thread task... | E:\Files\C++Files\cpp_tool\test\main.cpp:28:auto __cdecl main(int, char **)::(anonymous class)::operator()(int) const
+2025-06-26 13:46:10.7864665 |DEBUG | 000->Thread task... | E:\Files\C++Files\cpp_tool\test\main.cpp:28:auto __cdecl main(int, char **)::(anonymous class)::operator()(int) const
+2025-06-26 13:46:10.7864868 |DEBUG | 002->Thread task... | E:\Files\C++Files\cpp_tool\test\main.cpp:28:auto __cdecl main(int, char **)::(anonymous class)::operator()(int) const
+2025-06-26 13:46:10.7865371 |DEBUG | 003->Thread task... | E:\Files\C++Files\cpp_tool\test\main.cpp:28:auto __cdecl main(int, char **)::(anonymous class)::operator()(int) const
+2025-06-26 13:46:10.7865833 |DEBUG | 004->Thread task... | E:\Files\C++Files\cpp_tool\test\main.cpp:28:auto __cdecl main(int, char **)::(anonymous class)::operator()(int) const
+2025-06-26 13:46:10.7866232 |DEBUG | 005->Thread task... | E:\Files\C++Files\cpp_tool\test\main.cpp:28:auto __cdecl main(int, char **)::(anonymous class)::operator()(int) const
+2025-06-26 13:46:10.7866806 |DEBUG | 006->Thread task... | E:\Files\C++Files\cpp_tool\test\main.cpp:28:auto __cdecl main(int, char **)::(anonymous class)::operator()(int) const
+2025-06-26 13:46:10.7867248 |DEBUG | 007->Thread task... | E:\Files\C++Files\cpp_tool\test\main.cpp:28:auto __cdecl main(int, char **)::(anonymous class)::operator()(int) const
+2025-06-26 13:46:11.0714864 |DEBUG | 010->Thread task... | E:\Files\C++Files\cpp_tool\test\main.cpp:28:auto __cdecl main(int, char **)::(anonymous class)::operator()(int) const
+2025-06-26 13:46:11.0738078 |DEBUG | 011->Thread task... | E:\Files\C++Files\cpp_tool\test\main.cpp:28:auto __cdecl main(int, char **)::(anonymous class)::operator()(int) const
+2025-06-26 13:46:11.0747585 |DEBUG | 012->Thread task... | E:\Files\C++Files\cpp_tool\test\main.cpp:28:auto __cdecl main(int, char **)::(anonymous class)::operator()(int) const
+2025-06-26 13:46:11.0763583 |DEBUG | 013->Thread task... | E:\Files\C++Files\cpp_tool\test\main.cpp:28:auto __cdecl main(int, char **)::(anonymous class)::operator()(int) const
+2025-06-26 13:46:11.0772329 |DEBUG | 008->Thread task... | E:\Files\C++Files\cpp_tool\test\main.cpp:28:auto __cdecl main(int, char **)::(anonymous class)::operator()(int) const
+2025-06-26 13:46:11.0799047 |DEBUG | 014->Thread task... | E:\Files\C++Files\cpp_tool\test\main.cpp:28:auto __cdecl main(int, char **)::(anonymous class)::operator()(int) const
+2025-06-26 13:46:11.0800055 |DEBUG | 009->Thread task... | E:\Files\C++Files\cpp_tool\test\main.cpp:28:auto __cdecl main(int, char **)::(anonymous class)::operator()(int) const
+2025-06-26 13:46:11.0865569 |DEBUG | 015->Thread task... | E:\Files\C++Files\cpp_tool\test\main.cpp:28:auto __cdecl main(int, char **)::(anonymous class)::operator()(int) const
+2025-06-26 13:46:11.3550569 |DEBUG | 018->Thread task... | E:\Files\C++Files\cpp_tool\test\main.cpp:28:auto __cdecl main(int, char **)::(anonymous class)::operator()(int) const
+2025-06-26 13:46:11.3576174 |DEBUG | 019->Thread task... | E:\Files\C++Files\cpp_tool\test\main.cpp:28:auto __cdecl main(int, char **)::(anonymous class)::operator()(int) const
+2025-06-26 13:46:11.3675282 |DEBUG | 020->Thread task... | E:\Files\C++Files\cpp_tool\test\main.cpp:28:auto __cdecl main(int, char **)::(anonymous class)::operator()(int) const
+2025-06-26 13:46:11.3681500 |DEBUG | 022->Thread task... | E:\Files\C++Files\cpp_tool\test\main.cpp:28:auto __cdecl main(int, char **)::(anonymous class)::operator()(int) const
+2025-06-26 13:46:11.3683331 |DEBUG | 021->Thread task... | E:\Files\C++Files\cpp_tool\test\main.cpp:28:auto __cdecl main(int, char **)::(anonymous class)::operator()(int) const
+2025-06-26 13:46:11.3689118 |DEBUG | 017->Thread task... | E:\Files\C++Files\cpp_tool\test\main.cpp:28:auto __cdecl main(int, char **)::(anonymous class)::operator()(int) const
+2025-06-26 13:46:11.3692879 |DEBUG | 016->Thread task... | E:\Files\C++Files\cpp_tool\test\main.cpp:28:auto __cdecl main(int, char **)::(anonymous class)::operator()(int) const
+2025-06-26 13:46:11.3757735 |DEBUG | 023->Thread task... | E:\Files\C++Files\cpp_tool\test\main.cpp:28:auto __cdecl main(int, char **)::(anonymous class)::operator()(int) const
+2025-06-26 13:46:11.6432582 |DEBUG | 026->Thread task... | E:\Files\C++Files\cpp_tool\test\main.cpp:28:auto __cdecl main(int, char **)::(anonymous class)::operator()(int) const
+2025-06-26 13:46:11.6472883 |DEBUG | 027->Thread task... | E:\Files\C++Files\cpp_tool\test\main.cpp:28:auto __cdecl main(int, char **)::(anonymous class)::operator()(int) const
+2025-06-26 13:46:11.6518681 |DEBUG | 030->Thread task... | E:\Files\C++Files\cpp_tool\test\main.cpp:28:auto __cdecl main(int, char **)::(anonymous class)::operator()(int) const
+2025-06-26 13:46:11.6566765 |DEBUG | 025->Thread task... | E:\Files\C++Files\cpp_tool\test\main.cpp:28:auto __cdecl main(int, char **)::(anonymous class)::operator()(int) const
+2025-06-26 13:46:11.6586244 |DEBUG | 024->Thread task... | E:\Files\C++Files\cpp_tool\test\main.cpp:28:auto __cdecl main(int, char **)::(anonymous class)::operator()(int) const
+2025-06-26 13:46:11.6605279 |DEBUG | 028->Thread task... | E:\Files\C++Files\cpp_tool\test\main.cpp:28:auto __cdecl main(int, char **)::(anonymous class)::operator()(int) const
+2025-06-26 13:46:11.6636102 |DEBUG | 029->Thread task... | E:\Files\C++Files\cpp_tool\test\main.cpp:28:auto __cdecl main(int, char **)::(anonymous class)::operator()(int) const
+2025-06-26 13:46:11.6654811 |DEBUG | 031->Thread task... | E:\Files\C++Files\cpp_tool\test\main.cpp:28:auto __cdecl main(int, char **)::(anonymous class)::operator()(int) const
+2025-06-26 13:46:11.9308653 |DEBUG | 034->Thread task... | E:\Files\C++Files\cpp_tool\test\main.cpp:28:auto __cdecl main(int, char **)::(anonymous class)::operator()(int) const
+2025-06-26 13:46:11.9355499 |DEBUG | 035->Thread task... | E:\Files\C++Files\cpp_tool\test\main.cpp:28:auto __cdecl main(int, char **)::(anonymous class)::operator()(int) const
+2025-06-26 13:46:11.9465760 |DEBUG | 032->Thread task... | E:\Files\C++Files\cpp_tool\test\main.cpp:28:auto __cdecl main(int, char **)::(anonymous class)::operator()(int) const
+2025-06-26 13:46:11.9484696 |DEBUG | 033->Thread task... | E:\Files\C++Files\cpp_tool\test\main.cpp:28:auto __cdecl main(int, char **)::(anonymous class)::operator()(int) const
+2025-06-26 13:46:11.9486538 |DEBUG | 037->Thread task... | E:\Files\C++Files\cpp_tool\test\main.cpp:28:auto __cdecl main(int, char **)::(anonymous class)::operator()(int) const
+2025-06-26 13:46:11.9496616 |DEBUG | 038->Thread task... | E:\Files\C++Files\cpp_tool\test\main.cpp:28:auto __cdecl main(int, char **)::(anonymous class)::operator()(int) const
+2025-06-26 13:46:11.9540035 |DEBUG | 036->Thread task... | E:\Files\C++Files\cpp_tool\test\main.cpp:28:auto __cdecl main(int, char **)::(anonymous class)::operator()(int) const
+2025-06-26 13:46:11.9648571 |DEBUG | 039->Thread task... | E:\Files\C++Files\cpp_tool\test\main.cpp:28:auto __cdecl main(int, char **)::(anonymous class)::operator()(int) const
+2025-06-26 13:46:12.2600968 |INFO  | Thread pool close success, runtime is 1474ms. | E:\Files\C++Files\cpp_tool\base\thread_pool.cpp:22:__cdecl base::ThreadPool::~ThreadPool(void)
