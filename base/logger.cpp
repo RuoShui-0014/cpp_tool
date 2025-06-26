@@ -42,9 +42,12 @@ void Logger::Initialize(std::string file, Level level) {
           logger.queue_.pop();
         }
 
-        logger.file_ << std::format("{: <6} {}",
-                                    leval_string[static_cast<int>(info.level)],
-                                    info.message)
+        logger.file_ << std::format(
+                            "{:%Y-%m-%d %H:%M:%S} |{: <6}| {} | {}:{}:{}",
+                            info.time,
+                            leval_string[static_cast<int>(info.level)],
+                            info.message, info.location.file_name(),
+                            info.location.line(), info.location.function_name())
                      << std::endl;
       }
 
@@ -59,7 +62,8 @@ void Logger::Initialize(std::string file, Level level) {
 
 void Logger::Log(Level level,
                  std::string message,
-                 const std::source_location& location) {
+                 const std::source_location& location,
+                 NowTime time) {
   Logger& logger = Logger::Get();
   if (level < logger.level_) {
     return;
@@ -67,7 +71,7 @@ void Logger::Log(Level level,
 
   {
     std::unique_lock lock(logger.mutex_);
-    logger.queue_.emplace(level, std::move(message), location);
+    logger.queue_.emplace(level, std::move(message), location, std::move(time));
   }
   logger.cv_.notify_one();
 }

@@ -1,19 +1,25 @@
 #include "thread_pool.h"
 
 #include <thread>
+
 #include "logger.h"
 
 namespace base {
 
 ThreadPool::ThreadPool() = default;
 ThreadPool::~ThreadPool() {
-  Logger::Log(Logger::Level::kInfo, "Will close thread pool.");
+  LOG_INFO("Wait close thread pool.");
 
   running_.store(false);
   if (server_.joinable()) {
     server_.join();
   }
-  Logger::Log(Logger::Level::kInfo, "Thread pool close success.");
+
+  auto now = std::chrono::high_resolution_clock::now();
+  auto duration =
+      std::chrono::duration_cast<std::chrono::milliseconds>(now - start_);
+  LOG_INFO(std::format("Thread pool close success, runtime is {}ms.",
+                       duration.count()));
 }
 
 ThreadPool* ThreadPool::Get() {
@@ -38,7 +44,6 @@ void ThreadPool::Start(Params params) {
       }
     }
 
-
     for (auto& ins : threads_ins_) {
       ins->Stop();
     }
@@ -52,8 +57,8 @@ void ThreadPool::Start(Params params) {
   }
 }
 
-ThreadPool::ThreadIns::ThreadIns(int id): id_(id) {
-  Logger::Log(Logger::Level::kInfo, std::format("Thread pool`s child {} start.", id_));
+ThreadPool::ThreadIns::ThreadIns(int id) : id_(id) {
+  LOG_INFO(std::format("Thread pool`s child {} start.", id_));
 
   running_.store(true);
   worker_ = std::thread([this, id]() {
