@@ -4,33 +4,35 @@ project(base CXX)
 
 set(CMAKE_CXX_STANDARD 20)
 
-add_definitions(-DOS_WIN)
+if(WIN32)
+    add_compile_definitions(OS_WIN)
+endif()
 
-if (BUILDING_SHARED)
-    add_definitions(-DBUILDING_SHARED)
-    add_library(base SHARED
-            macro.h
-            logger.cpp
-            logger.h
-            thread_pool.cpp
-            thread_pool.h
-            safe_ptr.h
-    )
+set(BASE_SOURCES
+        logger.cpp
+        thread_pool.cpp
+)
 
-    add_custom_command(TARGET base POST_BUILD
-            COMMAND ${CMAKE_COMMAND} -E copy_if_different
-            $<TARGET_FILE:base>
-            $<TARGET_FILE_DIR:test>
-            COMMENT "Copying DLL to executable directory"
-    )
-else ()
-    add_library(base STATIC
-            macro.h
-            logger.cpp
-            logger.h
-            thread_pool.cpp
-            thread_pool.h
-            safe_ptr.h
-    )
-endif ()
+set(BASE_HEADERS
+        macro.h
+        logger.h
+        thread_pool.h
+        safe_ptr.h
+)
 
+if(BUILDING_SHARED)
+    add_library(base SHARED ${BASE_SOURCES} ${BASE_HEADERS})
+    target_compile_definitions(base PRIVATE BUILDING_SHARED)
+
+    # 只有当 test 目标存在时才添加拷贝命令
+    if(TARGET test)
+        add_custom_command(TARGET base POST_BUILD
+                COMMAND ${CMAKE_COMMAND} -E copy_if_different
+                $<TARGET_FILE:base>
+                $<TARGET_FILE_DIR:test>
+                COMMENT "Copying DLL to test directory"
+        )
+    endif()
+else()
+    add_library(base STATIC ${BASE_SOURCES} ${BASE_HEADERS})
+endif()

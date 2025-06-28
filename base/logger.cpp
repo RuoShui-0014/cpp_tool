@@ -31,17 +31,14 @@ void Logger::Initialize(std::string file, Level level) {
             });
       }
 
-      for (;;) {
-        Info info;
-        {
-          std::lock_guard lock(logger.mutex_);
-          if (logger.queue_.empty()) {
-            break;
-          }
-          info = std::move(logger.queue_.front());
-          logger.queue_.pop();
-        }
-
+      std::queue<Info> queue;
+      {
+        std::lock_guard lock(logger.mutex_);
+        queue.swap(logger.queue_);
+      }
+      while (!queue.empty()) {
+        Info info = std::move(queue.front());
+        queue.pop();
         logger.file_ << std::format(
                             "{:%Y-%m-%d %H:%M:%S} |{: <6}| {} | {}:{}:{}",
                             info.time,

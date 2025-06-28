@@ -1,8 +1,11 @@
 #include "thread_pool.h"
 
+#include <Windows.h>
+
 #include <thread>
 
 #include "logger.h"
+
 
 namespace base {
 
@@ -27,13 +30,14 @@ ThreadPool* ThreadPool::Get() {
   return &thread_pool;
 }
 
-void ThreadPool::Start(Params params) {
+void ThreadPool::Start(const Params& params) {
   Logger::Log(Logger::Level::kInfo, "Thread pool start.");
 
   params_ = params;
 
   running_.store(true);
   server_ = std::thread([this]() {
+    ::SetThreadDescription(GetCurrentThread(), L"thread pool server");
     while (running_.load()) {
       {
         std::unique_lock lock(exec_mutex_);
@@ -41,6 +45,17 @@ void ThreadPool::Start(Params params) {
             lock,
             std::chrono::system_clock::now() + std::chrono::milliseconds(10),
             [this]() { return !running_.load(); });
+      }
+
+      std::queue<std::function<void()>> tasks;
+      {
+        std::lock_guard lock(queue_mutex_);
+        tasks.swap(queue_);
+      }
+      while (!tasks.empty()) {
+        auto task = std::move(tasks.front());
+        tasks.pop();
+        ScheduleTask(std::move(task));
       }
     }
 
@@ -57,11 +72,27 @@ void ThreadPool::Start(Params params) {
   }
 }
 
+void ThreadPool::ScheduleTask(std::function<void()>&& task) {
+  std::vector<int> data(threads_ins_.size());
+  for (int i = 0; i < data.size(); i++) {
+    data[i] = threads_ins_[i]->TaskCount();
+  }
+  auto min_it = std::ranges::min_element(data);
+  for (int i = 0; i < data.size(); i++) {
+    if (data.at(i) != *min_it) {
+      continue;
+    }
+    threads_ins_[i]->AddTask(std::move(task));
+    return;
+  }
+}
+
 ThreadPool::ThreadIns::ThreadIns(int id) : id_(id) {
   LOG_INFO(std::format("Thread pool`s child {} start.", id_));
 
   running_.store(true);
   worker_ = std::thread([this, id]() {
+    ::SetThreadDescription(GetCurrentThread(), L"thread pool child");
     while (running_.load() || TaskCount() > 0) {
       {
         std::unique_lock lock(exec_mutex_);

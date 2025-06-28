@@ -1,5 +1,6 @@
 #pragma once
 #include <atomic>
+#include <chrono>
 #include <format>
 #include <fstream>
 #include <mutex>
@@ -7,7 +8,6 @@
 #include <source_location>
 #include <string>
 #include <thread>
-#include <chrono>
 
 namespace base {
 

@@ -3,6 +3,7 @@
 #include <condition_variable>
 #include <functional>
 #include <queue>
+#include <semaphore>
 #include <thread>
 #include <vector>
 
@@ -25,24 +26,20 @@ class BASE_EXPORT ThreadPool {
 
   static ThreadPool* Get();
 
-  void Start(Params params = {std::thread::hardware_concurrency(), 1});
+  void Start(const Params& params = {std::thread::hardware_concurrency(), 1});
 
   template <typename Func, typename... Args>
-  void AddTask(Func&& task, Args&&... args) {
-    std::vector<int> data(threads_ins_.size());
-    for (int i = 0; i < data.size(); i++) {
-      data[i] = threads_ins_[i]->TaskCount();
+  void PostTask(Func&& task, Args&&... args) {
+    auto func =
+        std::bind(std::forward<Func>(task), std::forward<Args>(args)...);
+    {
+      std::lock_guard lock(queue_mutex_);
+      queue_.emplace(std::move(func));
     }
-    auto min_it = std::ranges::min_element(data);
-    for (int i = 0; i < data.size(); i++) {
-      if (data.at(i) != *min_it) {
-        continue;
-      }
-      threads_ins_[i]->AddTask(std::forward<Func>(task),
-                               std::forward<Args>(args)...);
-      return;
-    }
+    cv_.notify_one();
   }
+
+  void ScheduleTask(std::function<void()>&& task);
 
  private:
   class ThreadIns {
@@ -61,13 +58,10 @@ class BASE_EXPORT ThreadPool {
       return count;
     }
 
-    template <typename Func, typename... Args>
-    void AddTask(Func&& task, Args&&... args) {
-      auto func =
-          std::bind(std::forward<Func>(task), std::forward<Args>(args)...);
+    void AddTask(std::function<void()>&& task) {
       {
         std::lock_guard lock(queue_mutex_);
-        queue_.emplace(std::move(func));
+        queue_.emplace(std::move(task));
       }
       cv_.notify_all();
     }
@@ -84,11 +78,13 @@ class BASE_EXPORT ThreadPool {
   };
 
   std::mutex exec_mutex_;
+  std::mutex queue_mutex_;
   std::condition_variable cv_;
 
   Params params_;
   std::thread server_;
   std::atomic_bool running_;
+  std::queue<std::function<void()>> queue_;
   std::vector<std::unique_ptr<ThreadIns>> threads_ins_;
 
   std::chrono::time_point<std::chrono::steady_clock> start_{
