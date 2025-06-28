@@ -6,7 +6,6 @@
 
 #include "logger.h"
 
-
 namespace base {
 
 ThreadPool::ThreadPool() = default;
@@ -36,39 +35,40 @@ void ThreadPool::Start(const Params& params) {
   params_ = params;
 
   running_.store(true);
-  server_ = std::thread([this]() {
-    ::SetThreadDescription(GetCurrentThread(), L"thread pool server");
-    while (running_.load()) {
-      {
-        std::unique_lock lock(exec_mutex_);
-        cv_.wait_until(
-            lock,
-            std::chrono::system_clock::now() + std::chrono::milliseconds(10),
-            [this]() { return !running_.load(); });
-      }
-
-      std::queue<std::function<void()>> tasks;
-      {
-        std::lock_guard lock(queue_mutex_);
-        tasks.swap(queue_);
-      }
-      while (!tasks.empty()) {
-        auto task = std::move(tasks.front());
-        tasks.pop();
-        ScheduleTask(std::move(task));
-      }
-    }
-
-    for (auto& ins : threads_ins_) {
-      ins->Stop();
-    }
-    for (auto& ins : threads_ins_) {
-      ins->Wait();
-    }
-  });
+  server_ = std::thread(&ThreadPool::ScheduleTask, this);
 
   for (int i = 0; i < params_.min_threads; i++) {
     threads_ins_.emplace_back(std::make_unique<ThreadIns>(i));
+  }
+}
+void ThreadPool::Execute() {
+  SetThreadDescription(GetCurrentThread(), L"thread pool server");
+  while (running_.load()) {
+    {
+      std::unique_lock lock(exec_mutex_);
+      cv_.wait_until(
+          lock,
+          std::chrono::system_clock::now() + std::chrono::milliseconds(10),
+          [this]() { return !running_.load(); });
+    }
+
+    std::queue<std::function<void()>> tasks;
+    {
+      std::lock_guard lock(queue_mutex_);
+      tasks.swap(queue_);
+    }
+    while (!tasks.empty()) {
+      auto task = std::move(tasks.front());
+      tasks.pop();
+      ScheduleTask(std::move(task));
+    }
+  }
+
+  for (auto& ins : threads_ins_) {
+    ins->Stop();
+  }
+  for (auto& ins : threads_ins_) {
+    ins->Wait();
   }
 }
 
@@ -88,33 +88,35 @@ void ThreadPool::ScheduleTask(std::function<void()>&& task) {
 }
 
 ThreadPool::ThreadIns::ThreadIns(int id) : id_(id) {
-  LOG_INFO(std::format("Thread pool`s child {} start.", id_));
+  LOG_INFO(std::format("Thread pool child {} start.", id_));
 
   running_.store(true);
-  worker_ = std::thread([this, id]() {
-    ::SetThreadDescription(GetCurrentThread(), L"thread pool child");
-    while (running_.load() || TaskCount() > 0) {
-      {
-        std::unique_lock lock(exec_mutex_);
-        cv_.wait(lock, [this]() { return TaskCount() || !running_.load(); });
-      }
-
-      std::function<void()> task;
-      {
-        std::lock_guard lock(queue_mutex_);
-        if (!queue_.empty()) {
-          task = std::move(queue_.front());
-          queue_.pop();
-        } else {
-          continue;
-        }
-      }
-      task();
-    }
-  });
+  worker_ = std::thread(&ThreadIns::Execute, this);
 }
 
 ThreadPool::ThreadIns::~ThreadIns() = default;
+
+void ThreadPool::ThreadIns::Execute() {
+  SetThreadDescription(GetCurrentThread(), L"thread pool child");
+  while (running_.load() || TaskCount() > 0) {
+    {
+      std::unique_lock lock(exec_mutex_);
+      cv_.wait(lock, [this]() { return TaskCount() || !running_.load(); });
+    }
+
+    std::function<void()> task;
+    {
+      std::lock_guard lock(queue_mutex_);
+      if (!queue_.empty()) {
+        task = std::move(queue_.front());
+        queue_.pop();
+      } else {
+        continue;
+      }
+    }
+    task();
+  }
+}
 
 void ThreadPool::ThreadIns::Stop() {
   running_.store(false);

@@ -28,6 +28,8 @@ class BASE_EXPORT ThreadPool {
 
   void Start(const Params& params = {std::thread::hardware_concurrency(), 1});
 
+  void Execute();
+
   template <typename Func, typename... Args>
   void PostTask(Func&& task, Args&&... args) {
     auto func =
@@ -47,6 +49,7 @@ class BASE_EXPORT ThreadPool {
     explicit ThreadIns(int id);
     ~ThreadIns();
 
+    void Execute();
     void Stop();
     void Wait();
     int TaskCount() {
