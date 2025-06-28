@@ -35,7 +35,7 @@ void ThreadPool::Start(const Params& params) {
   params_ = params;
 
   running_.store(true);
-  server_ = std::thread(&ThreadPool::ScheduleTask, this);
+  server_ = std::thread(&ThreadPool::Execute, this);
 
   for (int i = 0; i < params_.min_threads; i++) {
     threads_ins_.emplace_back(std::make_unique<ThreadIns>(i));
