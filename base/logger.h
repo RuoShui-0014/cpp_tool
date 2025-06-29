@@ -34,17 +34,17 @@ class Logger {
     std::source_location location;
     NowTime time;
   };
+  static void WriteLog();
   Logger();
 
-  Level level_;
-  std::atomic_bool initialized_;
-  std::atomic_bool running_;
+  std::mutex mutex_;
+  std::condition_variable cv_;
 
+  Level level_;
+  std::atomic_bool running_{true};
   std::ofstream file_;
   std::thread thread_;
-  std::mutex mutex_;
   std::queue<Info> queue_;
-  std::condition_variable cv_;
 };
 
 #define LOG_DEBUG(msg) base::Logger::Log(base::Logger::Level::kDebug, (msg));

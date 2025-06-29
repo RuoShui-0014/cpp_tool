@@ -1,5 +1,7 @@
 #include "logger.h"
 
+#include <Windows.h>
+
 #include <format>
 #include <syncstream>
 
@@ -16,45 +18,23 @@ void Logger::Initialize(std::string file, Level level) {
   logger.level_ = level;
 
   logger.thread_ = std::thread([]() {
-    static const char* leval_string[]{"DEBUG", "INFO", "WARN", "ERROR",
-                                      "FATAL"};
+    SetThreadDescription(GetCurrentThread(), L"logger server");
+
     Logger& logger = Logger::Get();
-    logger.running_.store(true);
-    for (;;) {
+    while (logger.running_.load()) {
       {
         std::unique_lock lock(logger.mutex_);
-        logger.cv_.wait_until(
-            lock,
-            std::chrono::system_clock::now() + std::chrono::milliseconds(5),
-            [&logger]() {
-              return !logger.queue_.empty() || !logger.running_.load();
-            });
+        logger.cv_.wait(lock, [&logger]() {
+          std::lock_guard lock(logger.mutex_);
+          return !logger.queue_.empty() || !logger.running_.load();
+        });
       }
 
-      std::queue<Info> queue;
-      {
-        std::lock_guard lock(logger.mutex_);
-        queue.swap(logger.queue_);
-      }
-      while (!queue.empty()) {
-        Info info = std::move(queue.front());
-        queue.pop();
-        logger.file_ << std::format(
-                            "{:%Y-%m-%d %H:%M:%S} |{: <6}| {} | {}:{}:{}",
-                            info.time,
-                            leval_string[static_cast<int>(info.level)],
-                            info.message, info.location.file_name(),
-                            info.location.line(), info.location.function_name())
-                     << std::endl;
-      }
-
-      if (!logger.running_.load()) {
-        return;
-      }
+      WriteLog();
     }
-  });
 
-  logger.initialized_.store(true);
+    WriteLog();
+  });
 }
 
 void Logger::Log(Level level,
@@ -85,6 +65,28 @@ Logger::~Logger() {
   logger.file_.flush();
   logger.file_.close();
 }
-Logger::Logger() : level_(Level::kInfo), initialized_(false) {}
+
+void Logger::WriteLog() {
+  static const char* leval_string[]{"DEBUG", "INFO", "WARN", "ERROR", "FATAL"};
+
+  Logger& logger = Logger::Get();
+  std::queue<Info> queue;
+  {
+    std::lock_guard lock(logger.mutex_);
+    queue.swap(logger.queue_);
+  }
+  while (!queue.empty()) {
+    Info info = std::move(queue.front());
+    queue.pop();
+    logger.file_ << std::format(
+                        "{:%Y-%m-%d %H:%M:%S} |{: <6}| {} | {}:{}:{}",
+                        info.time, leval_string[static_cast<int>(info.level)],
+                        info.message, info.location.file_name(),
+                        info.location.line(), info.location.function_name())
+                 << std::endl;
+  }
+}
+
+Logger::Logger() : level_(Level::kInfo) {}
 
 }  // namespace base
